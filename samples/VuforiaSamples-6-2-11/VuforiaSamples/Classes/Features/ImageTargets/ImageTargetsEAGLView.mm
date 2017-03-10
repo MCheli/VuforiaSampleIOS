@@ -59,6 +59,7 @@ namespace {
     // Model scale factor
     const float kObjectScaleNormal = 0.003f;
     const float kObjectScaleOffTargetTracking = 0.012f;
+    NSString *thingworxModel;
 }
 
 
@@ -219,6 +220,42 @@ namespace {
     [sampleAppRenderer renderFrameVuforia];
 }
 
+-(NSString*) makeRestAPICall : (NSString*) reqURLStr
+{
+    NSString *responseString;
+    NSDictionary *headers = @{ @"appkey": @"d0d16d49-6f92-4bee-8d4e-9ab91b65824b",
+                               @"accept": @"application/json",
+                               @"cache-control": @"no-cache",
+                               @"postman-token": @"b1a37621-0bc8-1fe3-5683-6055a0c071ad" };
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://academic-dev1.cloud.thingworx.com/Thingworx/Things/VuforiaSDKDemo/Properties/model"]
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:10.0];
+    [request setHTTPMethod:@"GET"];
+    [request setAllHTTPHeaderFields:headers];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
+                                                completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                    if (error) {
+                                                        NSLog(@"%@", error);
+                                                    } else {
+                                                        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
+                                                        NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                                                        NSMutableDictionary *s = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+                                                        NSArray *rows =[s objectForKey:@"rows"];
+                                                        NSString *model =[rows[0] objectForKey:@"model"];
+                                                        NSLog(@"%@", model);
+                                                        thingworxModel = model;
+                                                        
+                                                    }
+                                                    
+                                                }];
+    [dataTask resume];
+    return responseString;
+   
+}
+
 - (void) renderFrameWithState:(const Vuforia::State&) state projectMatrix:(Vuforia::Matrix44F&) projectionMatrix {
     [self setFramebuffer];
     
@@ -250,7 +287,7 @@ namespace {
         // OpenGL 2
         Vuforia::Matrix44F modelViewProjection;
         
-        if (offTargetTrackingEnabled) {
+        if ([thingworxModel  isEqual: @"building"]) {
             SampleApplicationUtils::rotatePoseMatrix(90, 1, 0, 0,&modelViewMatrix.data[0]);
             SampleApplicationUtils::scalePoseMatrix(kObjectScaleOffTargetTracking, kObjectScaleOffTargetTracking, kObjectScaleOffTargetTracking, &modelViewMatrix.data[0]);
         } else {
@@ -262,15 +299,20 @@ namespace {
         
         glUseProgram(shaderProgramID);
         
-        if (offTargetTrackingEnabled) {
-            glVertexAttribPointer(vertexHandle, 3, GL_FLOAT, GL_FALSE, 0, (const GLvoid*)buildingModel.vertices);
-            glVertexAttribPointer(normalHandle, 3, GL_FLOAT, GL_FALSE, 0, (const GLvoid*)buildingModel.normals);
-            glVertexAttribPointer(textureCoordHandle, 2, GL_FLOAT, GL_FALSE, 0, (const GLvoid*)buildingModel.texCoords);
-        } else {
-            glVertexAttribPointer(vertexHandle, 3, GL_FLOAT, GL_FALSE, 0, (const GLvoid*)teapotVertices);
-            glVertexAttribPointer(normalHandle, 3, GL_FLOAT, GL_FALSE, 0, (const GLvoid*)teapotNormals);
-            glVertexAttribPointer(textureCoordHandle, 2, GL_FLOAT, GL_FALSE, 0, (const GLvoid*)teapotTexCoords);
+        NSString *twitterUrl = @"YourUrlString";
+        NSString *resp = [self makeRestAPICall: twitterUrl];
+        if (thingworxModel){
+            if ([thingworxModel  isEqual: @"building"]) {
+                glVertexAttribPointer(vertexHandle, 3, GL_FLOAT, GL_FALSE, 0, (const GLvoid*)buildingModel.vertices);
+                glVertexAttribPointer(normalHandle, 3, GL_FLOAT, GL_FALSE, 0, (const GLvoid*)buildingModel.normals);
+                glVertexAttribPointer(textureCoordHandle, 2, GL_FLOAT, GL_FALSE, 0, (const GLvoid*)buildingModel.texCoords);
+            } else {
+                glVertexAttribPointer(vertexHandle, 3, GL_FLOAT, GL_FALSE, 0, (const GLvoid*)teapotVertices);
+                glVertexAttribPointer(normalHandle, 3, GL_FLOAT, GL_FALSE, 0, (const GLvoid*)teapotNormals);
+                glVertexAttribPointer(textureCoordHandle, 2, GL_FLOAT, GL_FALSE, 0, (const GLvoid*)teapotTexCoords);
+            }
         }
+
         
         glEnableVertexAttribArray(vertexHandle);
         glEnableVertexAttribArray(normalHandle);
@@ -285,7 +327,7 @@ namespace {
         
         glActiveTexture(GL_TEXTURE0);
         
-        if (offTargetTrackingEnabled) {
+        if ([thingworxModel  isEqual: @"building"]) {
             glBindTexture(GL_TEXTURE_2D, augmentationTexture[3].textureID);
         } else {
             glBindTexture(GL_TEXTURE_2D, augmentationTexture[targetIndex].textureID);
@@ -293,7 +335,7 @@ namespace {
         glUniformMatrix4fv(mvpMatrixHandle, 1, GL_FALSE, (const GLfloat*)&modelViewProjection.data[0]);
         glUniform1i(texSampler2DHandle, 0 /*GL_TEXTURE0*/);
         
-        if (offTargetTrackingEnabled) {
+        if ([thingworxModel  isEqual: @"building"]) {
             glDrawArrays(GL_TRIANGLES, 0, (int)buildingModel.numVertices);
         } else {
             glDrawElements(GL_TRIANGLES, NUM_TEAPOT_OBJECT_INDEX, GL_UNSIGNED_SHORT, (const GLvoid*)teapotIndices);

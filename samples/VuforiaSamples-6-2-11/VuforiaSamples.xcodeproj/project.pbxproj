@@ -72,6 +72,7 @@
 		D82AC3D81D414DB0002B3BAB /* Vuforia.dat in Resources */ = {isa = PBXBuildFile; fileRef = D82AC3D61D414DB0002B3BAB /* Vuforia.dat */; };
 		D82AC3D91D414DB0002B3BAB /* Vuforia.xml in Resources */ = {isa = PBXBuildFile; fileRef = D82AC3D71D414DB0002B3BAB /* Vuforia.xml */; };
 		D855C7D51D63DDD3007E3465 /* SampleAppRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = D855C7D41D63DDD3007E3465 /* SampleAppRenderer.mm */; };
+		F26C1B911E7237E00039F5CA /* RestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F26C1B901E7237E00039F5CA /* RestViewController.m */; };
 		FB1024EC1A82814000A2536F /* PresentMenuSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = FB1024E91A82814000A2536F /* PresentMenuSegue.m */; };
 		FB1024ED1A82814000A2536F /* UnwindMenuSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = FB1024EB1A82814000A2536F /* UnwindMenuSegue.m */; };
 		FB2F73C11A7FD5920098C5DD /* SampleAppMenuViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FB2F73C01A7FD5920098C5DD /* SampleAppMenuViewController.mm */; };
@@ -233,6 +234,7 @@
 		D82AC3D71D414DB0002B3BAB /* Vuforia.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Vuforia.xml; sourceTree = "<group>"; };
 		D855C7D31D63DDD3007E3465 /* SampleAppRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SampleAppRenderer.h; path = Classes/SampleApplication/SampleAppRenderer.h; sourceTree = "<group>"; };
 		D855C7D41D63DDD3007E3465 /* SampleAppRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SampleAppRenderer.mm; path = Classes/SampleApplication/SampleAppRenderer.mm; sourceTree = "<group>"; };
+		F26C1B901E7237E00039F5CA /* RestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RestViewController.m; path = Classes/Features/ImageTargets/RestViewController.m; sourceTree = "<group>"; };
 		FB1024CF1A827FC000A2536F /* SampleGLResourceHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SampleGLResourceHandler.h; path = Classes/SampleApplication/SampleGLResourceHandler.h; sourceTree = "<group>"; };
 		FB1024E81A82814000A2536F /* PresentMenuSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PresentMenuSegue.h; path = Classes/SampleAppUI/Transitions/PresentMenuSegue.h; sourceTree = "<group>"; };
 		FB1024E91A82814000A2536F /* PresentMenuSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PresentMenuSegue.m; path = Classes/SampleAppUI/Transitions/PresentMenuSegue.m; sourceTree = "<group>"; };
@@ -636,6 +638,7 @@
 				FB7A434D1A8E38AB0068CF5E /* ImageTargetsEAGLView.mm */,
 				FB7A434E1A8E38AB0068CF5E /* ImageTargetsViewController.h */,
 				FB7A434F1A8E38AB0068CF5E /* ImageTargetsViewController.mm */,
+				F26C1B901E7237E00039F5CA /* RestViewController.m */,
 			);
 			name = ImageTargets;
 			sourceTree = "<group>";
@@ -802,7 +805,7 @@
 				TargetAttributes = {
 					D21B07E51A1B4AA20041ECF3 = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = 3N85M4Y5NE;
+						DevelopmentTeam = ND4G2Q43UR;
 					};
 				};
 			};
@@ -933,6 +936,7 @@
 				D2D73CDE1A9263740081B7A8 /* CloudRecoViewController.mm in Sources */,
 				FB7A435E1A8E47540068CF5E /* CylinderModel.cpp in Sources */,
 				D21B085C1A1B698A0041ECF3 /* SampleApplicationSession.mm in Sources */,
+				F26C1B911E7237E00039F5CA /* RestViewController.m in Sources */,
 				D21B085B1A1B698A0041ECF3 /* SampleApplication3DModel.m in Sources */,
 				D29B5CEA1A92556300024A6C /* TextRecoEAGLView.mm in Sources */,
 				D23617791A932C35009A2192 /* UserDefinedTargetsViewController.mm in Sources */,
@@ -1060,7 +1064,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = 3N85M4Y5NE;
+				DEVELOPMENT_TEAM = ND4G2Q43UR;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = ../../build/include;
 				INFOPLIST_FILE = "VuforiaSamples/VuforiaSamples-Info.plist";
@@ -1082,7 +1086,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 21;
-				DEVELOPMENT_TEAM = 3N85M4Y5NE;
+				DEVELOPMENT_TEAM = ND4G2Q43UR;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = ../../build/include;
 				INFOPLIST_FILE = "VuforiaSamples/VuforiaSamples-Info.plist";
